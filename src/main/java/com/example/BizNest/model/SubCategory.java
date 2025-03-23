@@ -11,13 +11,18 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Category {
+public class SubCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     private String name;
 
-    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
-    private List<SubCategory> subCategories;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+    @ManyToMany
+    @JoinTable(name = "post_sub_category", joinColumns= @JoinColumn(name = "sub_category_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
+    private List<Post> posts;
 }
